@@ -1,0 +1,40 @@
+#!/usr/bin/expect -f
+
+set scpkey [lindex $argv 0]
+set host "hedge-[lindex $argv 1]"
+set dc [lindex $argv 2]
+
+set scpget "get"
+set scpput "put"
+set user "hops" 
+set domain ""
+set intdc  "int-tx3"
+set prodtx2dc "sc-tx2"
+set prodtx3dc "sc-tx3"
+set PASSWD ""
+
+if {$dc == $intdc} {
+  set domain huron-int.com
+}
+
+if {$dc == $prodtx2dc || $dc == $prodtx3dc} {
+  set domain huron-dev.com
+}
+
+set fqdn $host-internal.$dc.$domain
+
+puts "---- Executing $fqdn  --- \n"
+
+if {$scpkey == $scpget} {
+  spawn scp -v "$user@$fqdn:[lindex $argv 3]" [lindex $argv 4]
+}
+
+if {$scpkey == $scpput} {
+  spawn scp -v [lindex $argv 3] "$user@$fqdn:[lindex $argv 4]"
+}
+expect {
+  "assword" {
+    send "$PASSWD\r"
+  }
+}
+interact

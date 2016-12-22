@@ -1,0 +1,33 @@
+#!/usr/bin/expect -f
+
+set host "hedge-[lindex $argv 0]"
+set dc [lindex $argv 1]
+
+set user "hops" 
+set domain ""
+set intdc  "int-tx3"
+set prodtx2dc "sc-tx2"
+set prodtx3dc "sc-tx3"
+set PASSWD ""
+
+
+if {$dc == $intdc} {
+  set domain huron-int.com
+}
+
+if {$dc == $prodtx2dc || $dc == $prodtx3dc} {
+  set domain huron-dev.com
+}
+
+set fqdn $host-internal.$dc.$domain
+
+puts "---- Executing $fqdn  --- \n"
+
+spawn ssh -v "$user@$fqdn" 
+
+expect {
+  "assword" {
+    send "$PASSWD\r"
+  }
+}
+interact
