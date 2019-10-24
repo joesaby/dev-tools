@@ -6,7 +6,6 @@ HOST, PORT, CERT, KEY, ROOT_CA = '172.23.0.2',5063, './sippServer.pem', './sippS
 
 def handle(conn):
   print(conn.recv())
-  conn.write(b'HTTP/1.1 200 OK\n\n%s' % conn.getpeername()[0].encode())
 
 def main():
   sock = socket.socket()
