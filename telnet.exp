@@ -1,0 +1,27 @@
+#!/usr/bin/expect -f
+
+set host "192.168.1.1"
+set PASSWD "xxxxxx"
+
+puts "---- Telent $host  --- \n"
+
+spawn telnet "$host" 
+
+expect {
+  "assword" {
+    send "$PASSWD\r"
+  }
+}
+expect {
+ "$host>" {
+    send "en\r"
+  }
+}
+
+expect {
+  "Password:" {
+    send "$PASSWD\r"
+  }
+}
+
+interact
