@@ -1,8 +1,8 @@
 import json
 
-json_file = "/Users/joseseba/Desktop/bank statement builder/bank.json"
-bank_categories = "/Users/joseseba/Desktop/bank statement builder/bank_categories.json"
-out_file = "/Users/joseseba/Desktop/bank statement builder/bank_out.csv"
+json_file = "path/bank.json"
+bank_categories = "path/bank_categories.json"
+out_file = "path/bank_out.csv"
 
 main_categories = {}
 all_categories = {}
