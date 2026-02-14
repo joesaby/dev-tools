@@ -1,8 +1,18 @@
 // ── Types ────────────────────────────────────────────────────────────
 
+export interface TreeNode {
+  id: string;
+  parent_id: string | null;
+  level: number;
+  title: string;
+  content: string;
+  doc_id: string;
+}
+
 export interface CollectionConfig {
   name: string;
-  docs_root: string;
+  root: string;
+  weight: number;
   glob_pattern: string;
 }
 
@@ -12,13 +22,14 @@ export interface IndexConfig {
   summary_length: number;
 }
 
-export interface Document {
+export interface IndexedDocument {
   id: string;
   collection: string;
   path: string;
   title: string;
   content: string;
   summary: string;
+  tree: TreeNode[];
 }
 
 // ── Helpers ──────────────────────────────────────────────────────────
@@ -31,7 +42,8 @@ export function singleRootConfig(docs_root: string): IndexConfig {
     collections: [
       {
         name: "default",
-        docs_root,
+        root: docs_root,
+        weight: 1.0,
         glob_pattern: "**/*.md",
       },
     ],
